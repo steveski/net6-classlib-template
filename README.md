@@ -4,7 +4,7 @@
 
 Create a powershell script with the following
 ```
-param([Int32]$projectName="SomeProject")
+$projectName=$args[0]
 
 mkdir $projectName
 cd $projectName
@@ -22,24 +22,26 @@ dotnet sln add .\$projectName\$projectName.csproj
 mkdir Tests
 cd Tests
 
-mkdir $projectName.UnitTests
-cd $projectName.UnitTests
+mkdir "$projectName.UnitTests"
+cd "$projectName.UnitTests"
 dotnet new xunit --no-restore
-dotnet add $projectName.UnitTests.csproj reference ..\..\$projectName\$projectName.csproj
+dotnet add "$projectName.UnitTests.csproj" reference "..\..\$projectName\$projectName.csproj"
 dotnet add package FluentAssertions --no-restore
 dotnet add package NSubstitute --no-restore
 
 cd ..
-mkdir $projectName.IntegrationTests
-cd $projectName.IntegrationTests
+mkdir "$projectName.IntegrationTests"
+cd "$projectName.IntegrationTests"
 dotnet new xunit --no-restore
-dotnet add $projectName.IntegrationTests.csproj reference ..\..\$projectName\$projectName.csproj
+dotnet add "$projectName.IntegrationTests.csproj" reference "..\..\$projectName\$projectName.csproj"
 dotnet add package FluentAssertions --no-restore
 dotnet add package NSubstitute --no-restore
 
 cd ..\..
-dotnet sln add .\Tests\$projectName.UnitTests\$projectName.UnitTests.csproj
-dotnet sln add .\Tests\$projectName.IntegrationTests\$projectName.IntegrationTests.csproj
+dotnet sln add ".\Tests\$projectName.UnitTests\$projectName.UnitTests.csproj"
+dotnet sln add ".\Tests\$projectName.IntegrationTests\$projectName.IntegrationTests.csproj"
+cd ..
+
 echo $projectName Created
 ```
 
