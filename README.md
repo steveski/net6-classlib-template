@@ -1,1 +1,1 @@
-# net6-classlib-template
+# .NET 6.0 Class Library Template
